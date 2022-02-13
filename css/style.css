@@ -1,0 +1,11 @@
+.cvs-body {
+  height: 100vh;
+  background-color: #1b1b1b;
+}
+
+.cvs-body #cvs {
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 2px;
+}
+/*# sourceMappingURL=style.css.map */

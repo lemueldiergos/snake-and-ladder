@@ -11,8 +11,10 @@
 <body>
 <div class="cointainer cvs-body d-flex justify-content-center align-items-center">
     <canvas id="cvs"></canvas>
-    <p class="text-white mt-4">Dice Roll: <span id="dice-result">0</span></p>
-    <button onclick="Roll()" class="btn-primary btn my-1">Roll</button>
+    <p class="text-white mt-4">Rolling Dice Outcome: <span id="dice-result">0</span></p>
+    <button id="dice_ID" class="row" onclick="rolling()">
+        <span class="col-6 dots"></span>
+    </button>
 </div>    
 
 <script src="script.js"></script>

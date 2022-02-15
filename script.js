@@ -1,21 +1,24 @@
 var cvs = document.getElementById("cvs");
 var ctx = cvs.getContext("2d");
 var dice_roll = document.getElementById("dice-result");
+var dice_body = document.getElementById("dice_ID");
+var dice_dots = document.getElementsByClassName("dots");
 
 var board_width = window.innerWidth/2.5;
 var board_height = window.innerHeight/2.5;
 
+
 var map = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    0, 0, 0, 2, 0, 2, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 2, 0, 0,
+    0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
+    0, 2, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 3, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 2, 0, 0,
+    0, 0, 0, 0, 2, 0, 0, 0, 2, 0,
+    0, 0, 0, 3, 0, 3, 0, 0, 0, 0,
+    0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 3, 0, 0, 0, 3
 ]
 
 
@@ -27,17 +30,24 @@ with(cvs) {
 var box_size = board_width/10;
 var box_margin = box_size*0.05;
 
+
 var map_render =()=> {
     with(ctx) {
         clearRect(0, 0, board_width, board_width);
         for(y = 0; y < 10 ; y++) {    
             for(x = 0; x < 10 ; x++) {
                 switch(map[x+y*10]) {
-                    case 0: 
+                    case 0: // tiles
                     fillStyle = "#764ba2";
                     break;
-                    case 1:
+                    case 1: // player
                     fillStyle = "#667eea";
+                    break;
+                    case 2: // snake
+                    fillStyle = "#dd1818";
+                    break;
+                    case 3: // snake tail
+                    fillStyle = "#ff9a9e";
                     break;
                 }
                 fillRect(
@@ -53,67 +63,159 @@ var map_render =()=> {
 
 map_render();
 
-var x_inc =     0;
-var y_inc =     0;
-var odd_num =   -1;
-var inversion_state = true;
-var increment_by_10 = 0;
-var final_movement = 0;
+var x_inc =             0,
+    y_inc =             0,
+    odd_num =           -1,
+    inversion_state =   true,
+    increment_by_10 =   0,
+    final_movement =    0;
+
 /*
     Formula inversion of (1 - 10)
     y - Final Result
     x - increment by 1
-    z - odd numbers (1 - 19)
+    z - odd numbers Required (1,3,5 - 19)
     y = (x+10) - z
     z = 1 + 2
 */
 
-var Roll =()=> {
+/*
+    xs - X direction of player
+    ys - Y direction of player
+    os - Current Odd number
+    is - Current inversion state
+    ii - increment by 10
+    fs - increment of path.
+*/
+var snake_catcher=(xs_in=0, ys_in=0, os_in=0, is_in=0, ii_in=0, fs_in=0)=> {
+    const snake_head = [32, 36, 48, 62, 88, 95, 97];
 
-    x_inc += 1;
+    const xs         = [2, 6,  8,   2, 8,   5,  7];
+    const ys         = [2, 6,  3,   9, 3,   5,  7];
+    const os         = [3, 11,  15, 3,  15, 9, 13];
+    const is         = [false, false, true, true, true, false, false];
+    const ii         = [30, 30, 40, 60, 80, 90, 90];
+    const fs         = [68, 64, 57,  31, 17, 5, 3];
+    //10 6 26 18 24 56 78
+    const out_xs     = [10, 6, 6, 8, 4, 6, 8];
+    const out_ys     = [1, 5, 5, 8, 7, 6, 8];
+    const out_os     = [19, 11, 11, 15, 7, 11, 15];
+    const out_is     = [true, true, true, false, false, false, false];
+    const out_ii     = [0, 0, 20, 10, 20, 50, 70];
+    const out_fs     = [99, 95, 75, 82, 73, 40, 22];
+    
     
 
+    for(let i = 0; i < snake_head.length ; i++) {
+      if(
+        xs_in == xs[i] &&  
+        ys_in == ys[i] &&  
+        os_in == os[i] && 
+        is_in == is[i] && 
+        ii_in == ii[i] &&  
+        fs_in == fs[i]  
+      ) {
+        
+        x_inc =             out_xs[i],
+        y_inc =             out_ys[i],
+        odd_num =           out_os[i],
+        inversion_state =   out_is[i],
+        increment_by_10 =   out_ii[i],
+        final_movement =    out_fs[i];
+
+      }
+      map_render();
+    }
+}
+
+var Roll =()=> {
+    x_inc += 1;
     if(x_inc > 10) {
         increment_by_10 += 10;
         x_inc = 1;
         if(!inversion_state) {
             inversion_state = true;
         }
-        else                 {
+        else {
             inversion_state = false;
-    
         }
     }
     odd_num += 2;
     if(odd_num > 19) odd_num = 1;
-    
-    
-    if(!inversion_state) {
+    if(inversion_state) {
         y_inc = (x_inc+10) - odd_num;
         map[final_movement] = 0;
-   
     } else {
         map[final_movement] = 0;
         y_inc = x_inc;
     }
     final_movement = 100-(y_inc + increment_by_10)
-    dice_roll.innerHTML = final_movement;
     map[final_movement] = 1;
+   
     map_render();
+    
+    console.log(
+         " " + x_inc
+        +" " + y_inc
+        +" " +odd_num
+        +" " +inversion_state
+        +" " +increment_by_10
+        +" " + (final_movement)
+    );
+  // console.log(x_inc);
 }
 
-// LOOP
+var c_a_time =      250,
+    c_a_limit =     1,
+    c_a_counter =   0;
+
+var previous_span_count = 0;
+
+var rolling=()=> {
+    
+    previous_span_count = c_a_limit;
+    c_a_limit = Math.ceil(Math.random()*6);
+    dice_roll.innerHTML = c_a_limit;
+    setTimeout(roll_ctrl, c_a_time/2);
+    c_a_counter = 0;
+    dice_body.disabled = true;
+}
+
+var roll_ctrl=()=> {
+    
+    c_a_counter += 1;
+    if(c_a_counter == c_a_limit) {
+       
+        clearTimeout(roll_ctrl);
+        dice_body.disabled = false;
+        snake_catcher(
+            x_inc,
+            y_inc,
+            odd_num,
+            inversion_state,
+            increment_by_10,
+            final_movement 
+           );
+    }
+    else {
+        setTimeout(roll_ctrl, c_a_time/2);
+    }
+    Roll();
+}
+
 var loop=()=> {
-//map_render();
-//Roll();
-requestAnimationFrame(loop);
+    requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
 
-setInterval(
-function() {
-  // Roll();
-},
-100
-);
+// var loop =()=> {
+//     Roll();
+//     //console.log(final_movement);
+//     if(final_movement == -10) cancelAnimationFrame(loop);
+//     else requestAnimationFrame(loop);
+// }
+// requestAnimationFrame(loop);
+
+
+
 

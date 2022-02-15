@@ -8,3 +8,22 @@
         border-radius: 2px;
     }
 }
+
+#dice_ID {
+    border: 0;
+    //padding: 7vh;
+    width: 15vh;
+    height: 15vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+        margin: 1vh;
+        padding: 1.5vh;
+        width: 1vh;
+        height: 1vh;
+        border-radius: 100%;
+        background-color: black;
+    }
+}

@@ -12,4 +12,29 @@
   border: 2px solid white;
   border-radius: 2px;
 }
+
+#dice_ID {
+  border: 0;
+  width: 15vh;
+  height: 15vh;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#dice_ID span {
+  margin: 1vh;
+  padding: 1.5vh;
+  width: 1vh;
+  height: 1vh;
+  border-radius: 100%;
+  background-color: black;
+}
 /*# sourceMappingURL=style.css.map */

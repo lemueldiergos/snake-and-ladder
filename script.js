@@ -87,7 +87,7 @@ var map_render =()=> {
                         fillStyle = "#764ba2";
                     break;
                     case 1: // player
-                        fillStyle = "#667eea";
+                        fillStyle = "#e29587";
                     break;
                     case 2: // snake
                         fillStyle = "#dd1818";
@@ -172,45 +172,48 @@ var snake_catcher=      (xs_in=0, ys_in=0,
     }
 }
 
+var overflow_player = false,
+    overflow_count  = 0;
 
 // Player movement in map
 var Roll =()=> {
-    x_inc += 1;
-    if(x_inc > 10) {
-        increment_by_10 += 10;
-        x_inc = 1;
-        if(!inversion_state) {
-            inversion_state = true;
+    if(overflow_player == false) {
+        x_inc += 1;
+        if(x_inc > 10) {
+            increment_by_10 += 10;
+            x_inc = 1;
+            if(!inversion_state && final_movement > 0) {
+                inversion_state = true;
+            }
+            else {
+                inversion_state = false;
+            }
         }
-        else {
-            inversion_state = false;
+        odd_num += 2;
+        if(odd_num > 19) odd_num = 1;
+        if(inversion_state) {
+            y_inc = (x_inc+10) - odd_num;
+            map[final_movement] = 0;
+        } else {
+            map[final_movement] = 0;
+            y_inc = x_inc;
         }
+        final_movement = 100-(y_inc + increment_by_10); 
+        if(final_movement<=0) overflow_player = true;
+        overflow_count = 0;
     }
-    odd_num += 2;
-    if(odd_num > 19) odd_num = 1;
-    if(inversion_state) {
-        y_inc = (x_inc+10) - odd_num;
+    else {
         map[final_movement] = 0;
-    } else {
-        map[final_movement] = 0;
-        y_inc = x_inc;
-    }
-    final_movement = 100-(y_inc + increment_by_10)
+        overflow_count += 1;
+        x_inc = 10 -overflow_count;
+        y_inc = 10 - overflow_count;
+       odd_num -= 2;
+       final_movement = overflow_count;
+        console.log(overflow_count);
+       
+        if(on_movement_state) overflow_player = false;
+    }  
     map[final_movement] = 1;
-    for(i = 0 ; i < second_ver_head.length ;i++) {
-        if(final_movement == second_ver_head[i] && on_movement_state == true) {
-            map[second_ver_tail[i]] = 1;
-            snake_catcher(
-                x_inc,
-                y_inc,
-                odd_num,
-                inversion_state,
-                increment_by_10,
-                final_movement 
-            );
-        }
-    }
-    
     /*  For debugging snakes */ 
     // if(final_movement == 5 && on_movement_state == true) {
     //     map[44] = 1;
@@ -224,24 +227,58 @@ var Roll =()=> {
     //     );
     // }
     // console.log(final_movement);
-    console.log(
-        " " + x_inc
-       +" " + y_inc
-       +" " + odd_num
-       +" " + inversion_state
-       +" " + increment_by_10
-       +" " + (final_movement)
-   );
+    
+        for(i = 0 ; i < second_ver_head.length ;i++) {
+            if(final_movement == second_ver_head[i] && on_movement_state == true) {
+                map[second_ver_tail[i]] = 1;
+               
+                // DEVELOPER ONLY: Comment the Entire 
+                // snake_catcher() function to paralize the snake
+                snake_catcher(
+                    x_inc,
+                    y_inc,
+                    odd_num,
+                    inversion_state,
+                    increment_by_10,
+                    final_movement 
+                );
+
+            }
+        }
+        
+       
+       if(on_movement_state) {
+        if(
+               x_inc ==              10
+            && y_inc ==              10
+            && odd_num  ==           19
+            && inversion_state ==    false
+            && increment_by_10 ==    90
+            && final_movement  ==    0
+          ) {
+                confirm("You Win");
+          }
+        console.log(
+            " " + x_inc
+           +" " + y_inc
+           +" " + odd_num
+           +" " + inversion_state
+           +" " + increment_by_10
+           +" " + (final_movement)
+           +" " + overflow_player
+       );
+       }
     map_render();
 }
 
 var previous_span_count = 0;
 
 var rolling=()=> {
+    
     previous_span_count = c_a_limit;
     c_a_limit = Math.ceil(Math.random()*6);
     
-    //c_a_limit =1; // for Debuging player movement
+   // c_a_limit =1; // for Debuging player movement
     
     dice_roll.innerHTML = c_a_limit;
     setTimeout(roll_ctrl, c_a_time/2);
@@ -253,9 +290,11 @@ var roll_ctrl=()=> {
     
     c_a_counter += 1;
     if(c_a_counter == c_a_limit) {
+        
        on_movement_state = true;
         clearTimeout(roll_ctrl);
         dice_body.disabled = false;
+        
     }
     else {
         on_movement_state = false;
@@ -264,11 +303,11 @@ var roll_ctrl=()=> {
     Roll();
 }
 
-// AI movement
+// Computer
 
-setInterval(()=> {
-    rolling();
-}, 2000);
+// setInterval(()=> {
+//     rolling();
+// }, 1000);
 
 // for debugging only
 var loop=()=> {

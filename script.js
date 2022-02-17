@@ -29,47 +29,50 @@ var c_a_time =          250,
 
 
 // Snake head and Tail Location in MAP
-var snake_head =        [
+const snake_head =      [
                         [85, 75, 45, 15, 35, 75, 55],
                         [65, 55, 65, 35,  5, 15, 5]
-                        ];
-var snake_tail =        [
+                        ],
+snake_tail =            [
                         [95, 55, 55, 25, 25, 35, 45],
                         [95, 75, 95, 85, 25, 75, 45]
                         ];
 
 // Player MAP
 var map =               [
+                        0, 2, 0, 0, 0, 0, 0, 0, 2, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        3, 0, 0, 0, 2, 0, 0, 0, 0, 3,
+                        0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                        0, 2, 0, 0, 0, 0, 0, 0, 0, 3,
+                        0, 0, 2, 0, 0, 0, 0, 0, 0, 0,
+                        3, 0, 0, 0, 0, 0, 0, 3, 0, 2,
+                        0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
+                        3, 0, 0, 3, 0, 0, 0, 3, 0, 0
                         ];
-// if player is eaten by a snake these are the locations
-const xs         =      [2, 6,   8,  2,  8,  5,  7];
-const ys         =      [2, 6,   3,  9,  3,  5,  7];
-const os         =      [3, 11,  15, 3,  15, 9, 13];
-const is         =      [false, false, true, true, true, false, false];
-const ii         =      [30, 30, 40, 60, 80, 90, 90];
-const fs         =      [68, 64, 57,  31, 17, 5,  3];
-    
-const out_xs     =      [10,  6,  6,  8, 4,  6,  8];
-const out_ys     =      [ 1,  5,  5,  8, 7,  6,  8];
-const out_os     =      [19, 11, 11, 15, 7, 11, 15];
-const out_is     =      [true, true, true, false, false, false, false];
-const out_ii     =      [ 0,  0, 20, 10, 20, 50, 70];
-const out_fs     =      [99, 95, 75, 82, 73, 44, 22];
-    
-// Second Verification of snakes head
-var second_ver_head =   [68, 64, 57, 31, 17,  5,  3];
-var second_ver_tail =   [99, 95, 75, 82, 73, 44, 22];
+// if player is eaten by a snake or using a ladder, these are the locations
 
+/*                      |-----------------------------------------------|---------------------------------------------------------|
+                        |           SNAKE HEAD & TAIL LOCATION          |                LADDER INTIAL & FINAL LOCATION           |
+                        |-----------------------------------------------|---------------------------------------------------------|   */
+                        // INPUT
+const xs         =      [    2,     6,    8,    2,    8,     5,     7,   /**/    1,     4,    8,    1,     8,   10,     1,    10],
+      ys         =      [    2,     6,    3,    9,    3,     5,     7,   /**/   10,     7,    3,   10,     3,    1,     1,    10],
+      os         =      [    3,    11,   15,    3,   15,     9,    13,   /**/    1,     7,   15,    1,    15,   19,     1,    19],
+      is         =      [false, false, true, true, true, false, false,   /**/ true,  true, true, true,  true, true, false, false],
+      ii         =      [   30,    30,   40,   60,   80,    90,    90,   /**/    0,     0,    0,   20,    20,   40,    70,    70],
+      fs         =      [   68,    64,   57,   31,   17,     5,     3,   /**/   90,    93,   97,   70,    77,   59,    29,    20],
+                        // OUTPUT   
+      out_xs     =      [   10,     6,    6,    8,    4,     6,     8,   /**/    8,     4,   10,    2,     6,    7,     2,     9],
+      out_ys     =      [    1,     5,    5,    8,    7,     6,     8,   /**/    8,     4,    1,    9,     6,    4,     2,     9],
+      out_os     =      [   19,    11,   11,   15,    7,    11,    15,   /**/   15,     7,   19,    3,    11,   13,     3,    17],
+      out_is     =      [ true,  true, true,false,false, false, false,   /**/false, false, true, true, false, true, false, false],
+      out_ii     =      [    0,     0,   20,   10,   20,    50,    70,   /**/   30,    10,   20,   40,    70,   60,    90,    90],
+      out_fs     =      [   99,     95,  75,   82,   73,    44,    22,   /**/   62,    86,   79,   51,    24,   36,     8,     1];
+// Second Verification of snakes head   
+var second_ver_head =   [   68,    64,   57,   31,   17,     5,     3,   /**/   90,    93,   97,   70,    77,   59,    29,    20];
+var second_ver_tail =   [   99,     95,  75,   82,   73,    44,    22,   /**/   62,    86,   79,   51,    24,   36,     8,     1];
 // initializing Canvas/Map Size
 with(cvs) {
     width =             board_width;
@@ -87,7 +90,7 @@ var map_render =()=> {
                         fillStyle = "#764ba2";
                     break;
                     case 1: // player
-                        fillStyle = "#e29587";
+                        fillStyle = "gray";
                     break;
                     case 2: // snake
                         fillStyle = "#dd1818";
@@ -127,30 +130,20 @@ var map_render =()=> {
 map_render();
 
 /*
-    Formula inversion of (1 - 10)
+    Formula for inverting (1 - 10)
     y - Final Result
     x - increment by 1
     z - odd numbers Required (1,3,5 - 19)
     y = (x+10) - z
-    z = 1 + 2
+    z = 1 + 2 
 */
-
-/*
-    xs - X direction of player
-    ys - Y direction of player
-    os - Current Odd number
-    is - Current inversion state
-    ii - increment by 10
-    fs - increment of path.
-*/
-
 
 // when player eaten by snake function
 var snake_catcher=      (xs_in=0, ys_in=0, 
                         os_in=0, is_in=0, 
                         ii_in=0, fs_in=0)=> {
-    const snake_head =  [32, 36, 48, 62, 88, 95, 97];
-    for(let i = 0; i < snake_head.length ; i++) {
+    const snake_head_sample =  [32, 36, 48, 62, 88, 95, 97, 0,0,0,0,0,0,0,0];
+    for(let i = 0; i < snake_head_sample.length ; i++) {
       if(
         xs_in == xs[i] &&  
         ys_in == ys[i] &&  
@@ -228,7 +221,7 @@ var Roll =()=> {
     // }
     // console.log(final_movement);
     
-        for(i = 0 ; i < second_ver_head.length ;i++) {
+        for(let i = 0 ; i < second_ver_head.length ;i++) {
             if(final_movement == second_ver_head[i] && on_movement_state == true) {
                 map[second_ver_tail[i]] = 1;
                

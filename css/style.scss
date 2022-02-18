@@ -1,3 +1,15 @@
+::-webkit-scrollbar {width: 0px;}
+
+@font-face {
+    font-family: catcafe;
+    src: url("../assets/CatCafe.ttf");
+}
+
+* {
+    scroll-behavior: smooth;
+    font-family: catcafe, Arial;
+}
+
 .cvs-body {
     height: 100vh;
     background-color: rgb(27, 27, 27);
@@ -25,5 +37,90 @@
         height: 1vh;
         border-radius: 100%;
         background-color: black;
+    }
+}
+
+
+
+.starting-point {
+    // display: flex;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    opacity: 100%;
+    transition: opacity 0.2s linear;
+    button {
+        justify-self: center;
+        background-color: cornflowerblue;
+        transition: background-color 0.75s ease-in-out,
+                    width 0.2s linear,
+                    height 0.2s linear,
+                    font-size 0.3s linear,
+                    letter-spacing 0.3s linear;
+        width: 20vh;
+        height: 7.5vh;
+    }
+
+    button:focus {
+       position: fixed;
+       z-index: 100;
+       background-color: rgb(255, 0, 43);
+       width: 100%;
+       height: 100%;
+       font-size: 150%;
+       letter-spacing: 3px;
+       
+    }
+
+
+    footer {
+       position: absolute;
+       padding: 7.5vh;
+       bottom: 0;
+       font-size: 100%;
+    }
+
+    h2 {
+        letter-spacing: 5px;
+    }
+}
+
+.winning-point {
+    display: flex;
+    margin-top: -100vh;
+    background-color:none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: margin-top 0.15s linear,
+                background-color 0.4s linear;
+    .floater {
+        border-radius: 20px;
+        letter-spacing: 10px;
+        background-color: cornflowerblue;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 75vh;
+        height: 50vh;
+        button {
+            width: 10vh;
+            height: 10vh;
+            img {
+                width: 5vh;
+                filter: invert(100);
+            }
+        }
     }
 }

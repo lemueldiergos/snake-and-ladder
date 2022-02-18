@@ -1,10 +1,14 @@
 // HTML ELEMENTS
+var play_btn =          document.getElementById("play-btn"),
+    win_1 =             document.getElementsByClassName("starting-point")[0];
+
+var win_2 =             document.getElementsByClassName("winning-point")[0];
+
 var cvs =               document.getElementById("cvs"),
     ctx =               cvs.getContext("2d"),
     dice_roll =         document.getElementById("dice-result"),
     dice_body =         document.getElementById("dice_ID"),
     dice_dots =         document.getElementsByClassName("dots");
-
 // Map/canvas size
 var board_width =       window.innerWidth/2.5,
     board_height =      window.innerHeight/2.5,
@@ -38,18 +42,29 @@ snake_tail =            [
                         [95, 75, 95, 85, 25, 75, 45]
                         ];
 
+// Ladders magnitude in MAP
+const ladders_initial = [
+                        [95, 65, 25, 15, 15, 45, 65, 85],
+                        [75, 85, 65, 55,  5, 25, 35,  5]
+                        ],
+      ladders_final =   [
+                        [75, 35,  5,  5,  5, 75, 95, 95],
+                        [95, 95, 95, 75, 25, 75, 55, 25]
+                        ];
+
+
 // Player MAP
 var map =               [
-                        0, 2, 0, 0, 0, 0, 0, 0, 2, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        3, 0, 0, 0, 2, 0, 0, 0, 0, 3,
-                        0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 2, 0, 0, 0, 0, 0, 0, 0, 3,
-                        0, 0, 2, 0, 0, 0, 0, 0, 0, 0,
-                        3, 0, 0, 0, 0, 0, 0, 3, 0, 2,
-                        0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
-                        3, 0, 0, 3, 0, 0, 0, 3, 0, 0
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                         ];
 // if player is eaten by a snake or using a ladder, these are the locations
 
@@ -67,7 +82,7 @@ const xs         =      [    2,     6,    8,    2,    8,     5,     7,   /**/   
       out_xs     =      [   10,     6,    6,    8,    4,     6,     8,   /**/    8,     4,   10,    2,     6,    7,     2,     9],
       out_ys     =      [    1,     5,    5,    8,    7,     6,     8,   /**/    8,     4,    1,    9,     6,    4,     2,     9],
       out_os     =      [   19,    11,   11,   15,    7,    11,    15,   /**/   15,     7,   19,    3,    11,   13,     3,    17],
-      out_is     =      [ true,  true, true,false,false, false, false,   /**/false, false, true, true, false, true, false, false],
+      out_is     =      [ true,  true, true,false, true, false, false,   /**/false, false, true, true, false, true, false, false],
       out_ii     =      [    0,     0,   20,   10,   20,    50,    70,   /**/   30,    10,   20,   40,    70,   60,    90,    90],
       out_fs     =      [   99,     95,  75,   82,   73,    44,    22,   /**/   62,    86,   79,   51,    24,   36,     8,     1];
 // Second Verification of snakes head   
@@ -78,6 +93,37 @@ with(cvs) {
     width =             board_width;
     height =            board_width;
 }
+
+/*
+    // Nothing..
+*/
+
+var play_on=()=> {
+    play_btn.innerHTML = "Loading...";
+    setTimeout(function() {
+        with(win_1.style) {
+            opacity = 0+"%";
+            dice_body.disabled = true;
+            setTimeout(function() {
+                display = "none";
+                dice_body.disabled = false;
+            }, 500);
+        }
+    }, 1500);
+}
+
+var youwin=()=> {
+    with(win_2.style) {
+        marginTop = 0;
+        backgroundColor = "rgba(0, 0, 0, 0.75)";
+    }
+}
+
+var loop=()=> {
+    
+      requestAnimationFrame(loop);
+  }
+  //requestAnimationFrame(loop);
 
 // Map rendering...
 var map_render =()=> {
@@ -125,6 +171,24 @@ var map_render =()=> {
                 stroke();
             closePath();
         }
+
+        for(i=0;i<ladders_final[0].length;i++) {
+            beginPath();
+                lineWidth = 4;
+                strokeStyle = "#a2ab58";
+                moveTo(
+                    board_width*(ladders_initial[0][i]/100), 
+                    board_width*(ladders_initial[1][i]/100)
+                    );
+                lineTo(
+                    board_width*(ladders_final[0][i]/100), 
+                    board_width*(ladders_final[1][i]/100)
+                    );
+                stroke();
+            closePath();
+        }
+
+
     }    
 }
 map_render();
@@ -202,7 +266,7 @@ var Roll =()=> {
         y_inc = 10 - overflow_count;
        odd_num -= 2;
        final_movement = overflow_count;
-        console.log(overflow_count);
+       // console.log(overflow_count);
        
         if(on_movement_state) overflow_player = false;
     }  
@@ -249,8 +313,17 @@ var Roll =()=> {
             && increment_by_10 ==    90
             && final_movement  ==    0
           ) {
-                confirm("You Win");
+
+                // if you Will 
+                // CODE HERE
+                // 0001
+                dice_body.disabled = true;
+               // setTimeout(function(){
+                    youwin();
+                //}, 1000);
+                
           }
+    // FOR DEVELOPER:   for checking the current location of player
         console.log(
             " " + x_inc
            +" " + y_inc
@@ -271,7 +344,7 @@ var rolling=()=> {
     previous_span_count = c_a_limit;
     c_a_limit = Math.ceil(Math.random()*6);
     
-   // c_a_limit =1; // for Debuging player movement
+    //c_a_limit =1; // for Debuging player movement
     
     dice_roll.innerHTML = c_a_limit;
     setTimeout(roll_ctrl, c_a_time/2);
@@ -296,18 +369,31 @@ var roll_ctrl=()=> {
     Roll();
 }
 
-// Computer
+var resetter =()=> {
+    with(win_2.style) {
+        marginTop="-100vh";
+        backgroundColor = "none";
+    }
+    x_inc =             0,
+    y_inc =             0,
+    odd_num =           -1,
+    inversion_state =   true,
+    increment_by_10 =   0,
+    final_movement =    0; 
+    for(let i = 0 ; i < map.length; i++) {
+        map[i] = 0;
+    }
+    map_render();
+    dice_body.disabled = false;
+}
+// Computer Movement
 
 // setInterval(()=> {
 //     rolling();
-// }, 1000);
+// }, 1500);
 
 // for debugging only
-var loop=()=> {
-  //  map_render();
-    requestAnimationFrame(loop);
-}
-requestAnimationFrame(loop);
+
 
 
 

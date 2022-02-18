@@ -1,3 +1,17 @@
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+@font-face {
+  font-family: catcafe;
+  src: url("../assets/CatCafe.ttf");
+}
+
+* {
+  scroll-behavior: smooth;
+  font-family: catcafe, Arial;
+}
+
 .cvs-body {
   height: 100vh;
   background-color: #1b1b1b;
@@ -36,5 +50,111 @@
   height: 1vh;
   border-radius: 100%;
   background-color: black;
+}
+
+.starting-point {
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: white;
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  opacity: 100%;
+  -webkit-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+}
+
+.starting-point button {
+  -ms-grid-column-align: center;
+      justify-self: center;
+  background-color: cornflowerblue;
+  -webkit-transition: background-color 0.75s ease-in-out, width 0.2s linear, height 0.2s linear, font-size 0.3s linear, letter-spacing 0.3s linear;
+  transition: background-color 0.75s ease-in-out, width 0.2s linear, height 0.2s linear, font-size 0.3s linear, letter-spacing 0.3s linear;
+  width: 20vh;
+  height: 7.5vh;
+}
+
+.starting-point button:focus {
+  position: fixed;
+  z-index: 100;
+  background-color: #ff002b;
+  width: 100%;
+  height: 100%;
+  font-size: 150%;
+  letter-spacing: 3px;
+}
+
+.starting-point footer {
+  position: absolute;
+  padding: 7.5vh;
+  bottom: 0;
+  font-size: 100%;
+}
+
+.starting-point h2 {
+  letter-spacing: 5px;
+}
+
+.winning-point {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: -100vh;
+  background-color: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  -webkit-transition: margin-top 0.15s linear, background-color 0.4s linear;
+  transition: margin-top 0.15s linear, background-color 0.4s linear;
+}
+
+.winning-point .floater {
+  border-radius: 20px;
+  letter-spacing: 10px;
+  background-color: cornflowerblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 75vh;
+  height: 50vh;
+}
+
+.winning-point .floater button {
+  width: 10vh;
+  height: 10vh;
+}
+
+.winning-point .floater button img {
+  width: 5vh;
+  -webkit-filter: invert(100);
+          filter: invert(100);
 }
 /*# sourceMappingURL=style.css.map */

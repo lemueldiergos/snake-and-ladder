@@ -1,9 +1,46 @@
+/*
+    --DETAILS
+    PROGRAMMED BY:      LEMUEL E. DIERGOS
+    GITHUB:             https://github.com/lemueldiergos
+    FACEBOOK:           https://www.facebook.com/lemuel.diergos.1
+    PERSONAL SITE:      https://lemueldiergos.github.io
+    LANGUAGE USED:      JAVASCRIPT
+    IDE USED:           VSCODE
+    DATE CREATED:       FEB. 11, 2022
+    
+    --KEY CODES
+    0001        -   VARIABLES
+    0002        -   ARRAYS / MAPS / LOCATIONS
+    0003        -   WINDOW FUNCTIONS / GAME RESET
+    0004        -   MAP RENDERER / IMAGES
+    0005        -   SNAKES & LADDERS FUNCTIONS
+    0006        -   ROLLING DICE
+    0007        -   DEBUGGING SNAKES OR LADDERS
+    0008        -   FOR DISABLING THE SNAKE
+    0009        -   CODING AREA - IF PLAYER WINS THE GAME
+    0010        -   PLAYER CURRENT LOCATION (SHOWN IN CONSOLE LOG)
+    0011        -   ROLLING DICE CONTROL / RANDOM NUMBERS (1-6)
+    0012        -   ENABLE / DISABLE COMPUTER MOVEMENT (FOR TESTING)
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+*/
+// CODE: 0001
 // HTML ELEMENTS
 var play_btn =          document.getElementById("play-btn"),
-    win_1 =             document.getElementsByClassName("starting-point")[0];
-
-var win_2 =             document.getElementsByClassName("winning-point")[0];
-
+    win_1 =             document.getElementsByClassName("starting-point")[0],
+    win_2 =             document.getElementsByClassName("winning-point")[0];
+// Canvas Elements/Context
 var cvs =               document.getElementById("cvs"),
     ctx =               cvs.getContext("2d"),
     dice_roll =         document.getElementById("dice-result"),
@@ -14,10 +51,9 @@ var board_width =       window.innerWidth/2.5,
     board_height =      window.innerHeight/2.5,
     box_size =          board_width/10,
     box_margin =        box_size*0.05;
-
 // if player is moving
 var on_movement_state = false;
-
+var Animation_speed   = 400;    // ms
 // movement of player
 var x_inc =             0,
     y_inc =             0,
@@ -25,13 +61,11 @@ var x_inc =             0,
     inversion_state =   true,
     increment_by_10 =   0,
     final_movement =    0;
-
 // Dice animation Time, limiter, & counter;
 var c_a_time =          250,
     c_a_limit =         1,
     c_a_counter =       0;
-
-
+// CODE: 0002
 // Snake head and Tail Location in MAP
 const snake_head =      [
                         [85, 75, 45, 15, 35, 75, 55],
@@ -51,8 +85,6 @@ const ladders_initial = [
                         [75, 35,  5,  5,  5, 75, 95, 95],
                         [95, 95, 95, 75, 25, 75, 55, 25]
                         ];
-
-
 // Player MAP
 var map =               [
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -67,7 +99,6 @@ var map =               [
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                         ];
 // if player is eaten by a snake or using a ladder, these are the locations
-
 /*                      |-----------------------------------------------|---------------------------------------------------------|
                         |           SNAKE HEAD & TAIL LOCATION          |                LADDER INTIAL & FINAL LOCATION           |
                         |-----------------------------------------------|---------------------------------------------------------|   */
@@ -85,7 +116,7 @@ const xs         =      [    2,     6,    8,    2,    8,     5,     7,   /**/   
       out_is     =      [ true,  true, true,false, true, false, false,   /**/false, false, true, true, false, true, false, false],
       out_ii     =      [    0,     0,   20,   10,   20,    50,    70,   /**/   30,    10,   20,   40,    70,   60,    90,    90],
       out_fs     =      [   99,     95,  75,   82,   73,    44,    22,   /**/   62,    86,   79,   51,    24,   36,     8,     1];
-// Second Verification of snakes head   
+// Second Verification of snakes head and ladders.  
 var second_ver_head =   [   68,    64,   57,   31,   17,     5,     3,   /**/   90,    93,   97,   70,    77,   59,    29,    20];
 var second_ver_tail =   [   99,     95,  75,   82,   73,    44,    22,   /**/   62,    86,   79,   51,    24,   36,     8,     1];
 // initializing Canvas/Map Size
@@ -93,11 +124,8 @@ with(cvs) {
     width =             board_width;
     height =            board_width;
 }
-
-/*
-    // Nothing..
-*/
-
+//  WINDOW CLIENT SIDES
+// CODE: 0003
 var play_on=()=> {
     play_btn.innerHTML = "Loading...";
     setTimeout(function() {
@@ -111,20 +139,33 @@ var play_on=()=> {
         }
     }, 1500);
 }
-
+// WINNING FUNCTION
 var youwin=()=> {
     with(win_2.style) {
         marginTop = 0;
         backgroundColor = "rgba(0, 0, 0, 0.75)";
     }
 }
-
-var loop=()=> {
-    
-      requestAnimationFrame(loop);
-  }
-  //requestAnimationFrame(loop);
-
+// RESET FUNCTION
+var resetter =()=> {
+    with(win_2.style) {
+        marginTop="-100vh";
+        backgroundColor = "none";
+    }
+    x_inc =             0;
+    y_inc =             0;
+    odd_num =           -1;
+    inversion_state =   true;
+    increment_by_10 =   0;
+    final_movement =    0; 
+    overflow_player =   false;
+    for(let i = 0 ; i < map.length; i++) {
+        map[i] = 0;
+    }
+    map_render();
+    dice_body.disabled = false;
+}
+// CODE: 0004
 // Map rendering...
 var map_render =()=> {
     with(ctx) {
@@ -153,9 +194,8 @@ var map_render =()=> {
                 );
             }
         }
-        //x - y
-        // snake length - percentage
-       
+        // snake length - in percentage 
+        //  FORMULA : x * y / 100
         for(i=0;i<snake_head[0].length;i++) {
             beginPath();
                 lineWidth = 4;
@@ -171,7 +211,6 @@ var map_render =()=> {
                 stroke();
             closePath();
         }
-
         for(i=0;i<ladders_final[0].length;i++) {
             beginPath();
                 lineWidth = 4;
@@ -192,7 +231,6 @@ var map_render =()=> {
     }    
 }
 map_render();
-
 /*
     Formula for inverting (1 - 10)
     y - Final Result
@@ -201,7 +239,7 @@ map_render();
     y = (x+10) - z
     z = 1 + 2 
 */
-
+// CODE: 0005
 // when player eaten by snake function
 var snake_catcher=      (xs_in=0, ys_in=0, 
                         os_in=0, is_in=0, 
@@ -228,10 +266,9 @@ var snake_catcher=      (xs_in=0, ys_in=0,
         }
     }
 }
-
 var overflow_player = false,
     overflow_count  = 0;
-
+// CODE: 0006
 // Player movement in map
 var Roll =()=> {
     if(overflow_player == false) {
@@ -266,11 +303,10 @@ var Roll =()=> {
         y_inc = 10 - overflow_count;
        odd_num -= 2;
        final_movement = overflow_count;
-       // console.log(overflow_count);
-       
         if(on_movement_state) overflow_player = false;
     }  
     map[final_movement] = 1;
+    // CODE: 0007 
     /*  For debugging snakes */ 
     // if(final_movement == 5 && on_movement_state == true) {
     //     map[44] = 1;
@@ -284,26 +320,27 @@ var Roll =()=> {
     //     );
     // }
     // console.log(final_movement);
-    
         for(let i = 0 ; i < second_ver_head.length ;i++) {
             if(final_movement == second_ver_head[i] && on_movement_state == true) {
                 map[second_ver_tail[i]] = 1;
-               
+               // CODE: 0008
                 // DEVELOPER ONLY: Comment the Entire 
-                // snake_catcher() function to paralize the snake
-                snake_catcher(
-                    x_inc,
-                    y_inc,
-                    odd_num,
-                    inversion_state,
-                    increment_by_10,
-                    final_movement 
-                );
-
+                // snake_catcher() function to disable the snake
+                dice_body.disabled = true;
+                setTimeout(function()
+                {
+                    snake_catcher(
+                        x_inc,
+                        y_inc,
+                        odd_num,
+                        inversion_state,
+                        increment_by_10,
+                        final_movement 
+                    );
+                    dice_body.disabled =false;
+                }, Animation_speed); 
             }
         }
-        
-       
        if(on_movement_state) {
         if(
                x_inc ==              10
@@ -313,17 +350,16 @@ var Roll =()=> {
             && increment_by_10 ==    90
             && final_movement  ==    0
           ) {
-
-                // if you Will 
+                // CODE: 0009
+                // if you Win
                 // CODE HERE
-                // 0001
                 dice_body.disabled = true;
-               // setTimeout(function(){
+               setTimeout(function(){
                     youwin();
-                //}, 1000);
-                
+                }, 750);
           }
-    // FOR DEVELOPER:   for checking the current location of player
+    // FOR DEVELOPER: for checking the current location of player
+    // CODE: 0010
         console.log(
             " " + x_inc
            +" " + y_inc
@@ -339,28 +375,23 @@ var Roll =()=> {
 
 var previous_span_count = 0;
 
+// CODE: 0011
 var rolling=()=> {
     
     previous_span_count = c_a_limit;
     c_a_limit = Math.ceil(Math.random()*6);
-    
     //c_a_limit =1; // for Debuging player movement
-    
-    dice_roll.innerHTML = c_a_limit;
+    //dice_roll.innerHTML = c_a_limit;
     setTimeout(roll_ctrl, c_a_time/2);
     c_a_counter = 0;
     dice_body.disabled = true;
 }
-
 var roll_ctrl=()=> {
-    
     c_a_counter += 1;
     if(c_a_counter == c_a_limit) {
-        
        on_movement_state = true;
         clearTimeout(roll_ctrl);
         dice_body.disabled = false;
-        
     }
     else {
         on_movement_state = false;
@@ -368,31 +399,12 @@ var roll_ctrl=()=> {
     }
     Roll();
 }
-
-var resetter =()=> {
-    with(win_2.style) {
-        marginTop="-100vh";
-        backgroundColor = "none";
-    }
-    x_inc =             0,
-    y_inc =             0,
-    odd_num =           -1,
-    inversion_state =   true,
-    increment_by_10 =   0,
-    final_movement =    0; 
-    for(let i = 0 ; i < map.length; i++) {
-        map[i] = 0;
-    }
-    map_render();
-    dice_body.disabled = false;
-}
 // Computer Movement
-
+// CODE: 0012
 // setInterval(()=> {
 //     rolling();
-// }, 1500);
+// }, 2000);
 
-// for debugging only
 
 
 

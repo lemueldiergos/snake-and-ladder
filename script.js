@@ -360,43 +360,63 @@ var Roll =()=> {
           }
     // FOR DEVELOPER: for checking the current location of player
     // CODE: 0010
-        console.log(
-            " " + x_inc
-           +" " + y_inc
-           +" " + odd_num
-           +" " + inversion_state
-           +" " + increment_by_10
-           +" " + (final_movement)
-           +" " + overflow_player
-       );
+    //     console.log(
+    //         " " + x_inc
+    //        +" " + y_inc
+    //        +" " + odd_num
+    //        +" " + inversion_state
+    //        +" " + increment_by_10
+    //        +" " + (final_movement)
+    //        +" " + overflow_player
+    //    );
        }
     map_render();
 }
 
 var previous_span_count = 0;
+var dice_dots_create_state = false;
 
 // CODE: 0011
 var rolling=()=> {
-    
+    with(dice_body.style) {
+        transform = "rotate(360deg)";
+    }
     previous_span_count = c_a_limit;
     c_a_limit = Math.ceil(Math.random()*6);
     //c_a_limit =1; // for Debuging player movement
-    //dice_roll.innerHTML = c_a_limit;
+   
+   // console.log(dice_dots.length);    
+    dice_body.disabled = true;
     setTimeout(roll_ctrl, c_a_time/2);
     c_a_counter = 0;
-    dice_body.disabled = true;
+    
+    console.log(c_a_limit);
+    dice_body.innerHTML = "";
 }
+
 var roll_ctrl=()=> {
     c_a_counter += 1;
     if(c_a_counter == c_a_limit) {
        on_movement_state = true;
         clearTimeout(roll_ctrl);
         dice_body.disabled = false;
+        dice_dots_create_state = true;
+        for(let i = 0; i < c_a_limit;i++) {
+            var spanCreate = document.createElement("span");
+            spanCreate.classList.add("dots");
+            spanCreate.classList.add("m-1");
+            dice_body.appendChild(spanCreate);
+        }
+        with(dice_body.style) {
+            transform = "rotate(-360deg)";
+        }
+        
     }
     else {
         on_movement_state = false;
         setTimeout(roll_ctrl, c_a_time/2);
     }
+   // setTimeout(function() {Roll();}, c_a_time/2);
     Roll();
 }
 // Computer Movement

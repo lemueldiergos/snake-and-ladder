@@ -7,9 +7,14 @@
   src: url("../assets/CatCafe.ttf");
 }
 
+@font-face {
+  font-family: font2;
+  src: url("../assets/font3.ttf");
+}
+
 * {
   scroll-behavior: smooth;
-  font-family: catcafe, Arial;
+  font-family: font2, catcafe;
 }
 
 .cvs-body {
@@ -29,8 +34,8 @@
 
 #dice_ID {
   border: 0;
-  width: 15vh;
-  height: 15vh;
+  width: 12vh;
+  height: 12vh;
   border-radius: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -41,21 +46,24 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-transition: -webkit-transform 0.1s linear;
+  transition: -webkit-transform 0.1s linear;
+  transition: transform 0.1s linear;
+  transition: transform 0.1s linear, -webkit-transform 0.1s linear;
 }
 
 #dice_ID span {
-  margin: 1vh;
-  padding: 1.5vh;
-  width: 1vh;
-  height: 1vh;
+  padding: 1.2vh;
+  width: 0.7vh;
+  height: 0.7vh;
   border-radius: 100%;
   background-color: black;
 }
 
 .starting-point {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;

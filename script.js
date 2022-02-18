@@ -37,6 +37,7 @@
 */
 // CODE: 0001
 // HTML ELEMENTS
+document.title = window.innerWidth;
 var play_btn =          document.getElementById("play-btn"),
     win_1 =             document.getElementsByClassName("starting-point")[0],
     win_2 =             document.getElementsByClassName("winning-point")[0];
@@ -51,6 +52,17 @@ var board_width =       window.innerWidth/2.5,
     board_height =      window.innerHeight/2.5,
     box_size =          board_width/10,
     box_margin =        box_size*0.05;
+
+    if(window.innerWidth >= 1000) {
+        board_width =       window.innerWidth/3;
+        board_height =      window.innerHeight/3;
+        box_size =          board_width/10;
+        box_margin =        box_size*0.05;
+        with(dice_body.style) {
+            margin = "30vh !important";
+        }
+    }
+
 // if player is moving
 var on_movement_state = false;
 var Animation_speed   = 400;    // ms
@@ -119,6 +131,27 @@ const xs         =      [    2,     6,    8,    2,    8,     5,     7,   /**/   
 // Second Verification of snakes head and ladders.  
 var second_ver_head =   [   68,    64,   57,   31,   17,     5,     3,   /**/   90,    93,   97,   70,    77,   59,    29,    20];
 var second_ver_tail =   [   99,     95,  75,   82,   73,    44,    22,   /**/   62,    86,   79,   51,    24,   36,     8,     1];
+
+
+var snakes_img_formation = [
+    // 0 - ROTATION
+    [2.2,   0.15],
+    // 1 - TRANSLATION
+    [
+     [1,    1],
+     [0,    0]
+    ],
+    // 2 - X
+    [1,     0.5],
+    // 3 - Y
+    [5,     3.5],
+    // 4 - WIDTH
+    [2,     2.75],
+    // 5 - HEIGHT
+    [2,    2.75]
+];
+
+
 // initializing Canvas/Map Size
 with(cvs) {
     width =             board_width;
@@ -145,9 +178,11 @@ var youwin=()=> {
         marginTop = 0;
         backgroundColor = "rgba(0, 0, 0, 0.75)";
     }
+    dice_body.style.opacity = 0;
 }
 // RESET FUNCTION
 var resetter =()=> {
+    dice_body.style.opacity ="100%";
     with(win_2.style) {
         marginTop="-100vh";
         backgroundColor = "none";
@@ -165,6 +200,31 @@ var resetter =()=> {
     map_render();
     dice_body.disabled = false;
 }
+
+var snake_1 = new Image(),
+    snake_2 = new Image(),
+    ladder  = new Image();
+    
+    snake_1.src = "assets/images/snake1.png";
+    
+// SNAKE LOADER 
+var snake_img_render =()=> {
+    snake_1.onload=()=> {
+        for(let i = 0; i < 7; i++) {
+                 ctx.drawImage(
+                    snake_1, 
+                    board_width/2*(1/snakes_img_formation[2][i]),
+                    board_width/2*(1/snakes_img_formation[3][i]),
+                    board_width/snakes_img_formation[4][i], 
+                    board_width/snakes_img_formation[5][i]
+                );
+        }
+    }
+}
+
+snake_img_render();
+    
+
 // CODE: 0004
 // Map rendering...
 var map_render =()=> {
@@ -174,10 +234,10 @@ var map_render =()=> {
             for(x = 0; x < 10 ; x++) {
                 switch(map[x+y*10]) {
                     case 0: // tiles
-                        fillStyle = "#764ba2";
+                        fillStyle = "#139487";
                     break;
                     case 1: // player
-                        fillStyle = "gray";
+                        fillStyle = "magenta";
                     break;
                     case 2: // snake
                         fillStyle = "#dd1818";
@@ -194,8 +254,12 @@ var map_render =()=> {
                 );
             }
         }
+
+       
+        
         // snake length - in percentage 
         //  FORMULA : x * y / 100
+
         for(i=0;i<snake_head[0].length;i++) {
             beginPath();
                 lineWidth = 4;
@@ -227,8 +291,16 @@ var map_render =()=> {
             closePath();
         }
 
-
-    }    
+        for(let i = 0; i < 7; i++) {
+            ctx.drawImage(
+               snake_1, 
+               board_width/2*(1/snakes_img_formation[2][i]),
+               board_width/2*(1/snakes_img_formation[3][i]),
+               board_width/snakes_img_formation[4][i], 
+               board_width/snakes_img_formation[5][i]
+           );
+        }
+    } 
 }
 map_render();
 /*
@@ -378,35 +450,35 @@ var dice_dots_create_state = false;
 
 // CODE: 0011
 var rolling=()=> {
+    dice_body.innerHTML = "";
     with(dice_body.style) {
-        transform = "rotate(360deg)";
+        transform = "rotate(360deg) scale(175%)";
     }
     previous_span_count = c_a_limit;
     c_a_limit = Math.ceil(Math.random()*6);
     //c_a_limit =1; // for Debuging player movement
-   
-   // console.log(dice_dots.length);    
     dice_body.disabled = true;
-    setTimeout(roll_ctrl, c_a_time/2);
+    setTimeout(roll_ctrl, c_a_time);
     c_a_counter = 0;
     
-    console.log(c_a_limit);
-    dice_body.innerHTML = "";
+  // console.log(c_a_limit);
+   for(let i = 0; i < c_a_limit;i++) {
+    var spanCreate = document.createElement("span");
+    spanCreate.classList.add("dots");
+    spanCreate.classList.add("m-1");
+    dice_body.appendChild(spanCreate);
+    }
+ //  
 }
 
 var roll_ctrl=()=> {
     c_a_counter += 1;
     if(c_a_counter == c_a_limit) {
-       on_movement_state = true;
+        on_movement_state = true;
         clearTimeout(roll_ctrl);
         dice_body.disabled = false;
         dice_dots_create_state = true;
-        for(let i = 0; i < c_a_limit;i++) {
-            var spanCreate = document.createElement("span");
-            spanCreate.classList.add("dots");
-            spanCreate.classList.add("m-1");
-            dice_body.appendChild(spanCreate);
-        }
+        
         with(dice_body.style) {
             transform = "rotate(-360deg)";
         }

@@ -48,6 +48,8 @@
           align-items: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  -webkit-transform: rotate(0deg) scale(100%);
+          transform: rotate(0deg) scale(100%);
   -webkit-transition: -webkit-transform 0.1s linear;
   transition: -webkit-transform 0.1s linear;
   transition: transform 0.1s linear;
@@ -63,7 +65,9 @@
 }
 
 .starting-point {
-  display: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;

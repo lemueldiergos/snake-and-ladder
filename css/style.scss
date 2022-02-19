@@ -51,8 +51,8 @@
 
 
 .starting-point {
-    display: flex;
-    // display: none;
+    //display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -131,4 +131,26 @@
             }
         }
     }
+}
+
+
+//BOOTSTRAP MEDIA
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    #dice_ID {margin: 10vh !important;}
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+ #dice_ID {margin: 20vh !important;}
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    #dice_ID {margin: 30vh !important;}
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    #dice_ID {margin: 30vh !important;}
 }

@@ -37,7 +37,6 @@
 */
 // CODE: 0001
 // HTML ELEMENTS
-document.title = window.innerWidth;
 var play_btn =          document.getElementById("play-btn"),
     win_1 =             document.getElementsByClassName("starting-point")[0],
     win_2 =             document.getElementsByClassName("winning-point")[0];
@@ -53,14 +52,43 @@ var board_width =       window.innerWidth/2.5,
     box_size =          board_width/10,
     box_margin =        box_size*0.05;
 
-    if(window.innerWidth >= 1000) {
-        board_width =       window.innerWidth/3;
-        board_height =      window.innerHeight/3;
+    if(window.innerWidth >= 750) {
+        board_width =       window.innerWidth/2.5;
+        board_height =      window.innerHeight/2.5;
+        box_size =          board_width/10;
+        box_margin =        box_size*0.05;
+        with(dice_body.style) {
+            margin = "40vh !important";
+        }
+    } 
+    else if(window.innerHeight >= 600) {
+        board_width =       window.innerWidth/2;
+        board_height =      window.innerHeight/2;
         box_size =          board_width/10;
         box_margin =        box_size*0.05;
         with(dice_body.style) {
             margin = "30vh !important";
         }
+    }
+    
+    else if(window.innerHeight >= 500) {
+        board_width =       window.innerWidth/1.25;
+        board_height =      window.innerHeight/1.25;
+        box_size =          board_width/10;
+        box_margin =        box_size*0.05;
+        with(dice_body.style) {
+            margin = "30vh !important";
+        }
+    }else if(window.innerHeight >= 501) {
+        board_width =       window.innerWidth/2;
+        board_height =      window.innerHeight/2;
+        box_size =          board_width/10;
+        box_margin =        box_size*0.05;
+        with(dice_body.style) {
+            margin = "35vh !important";
+        }
+    } else {
+       // do nothing...
     }
 
 // if player is moving
@@ -132,26 +160,6 @@ const xs         =      [    2,     6,    8,    2,    8,     5,     7,   /**/   
 var second_ver_head =   [   68,    64,   57,   31,   17,     5,     3,   /**/   90,    93,   97,   70,    77,   59,    29,    20];
 var second_ver_tail =   [   99,     95,  75,   82,   73,    44,    22,   /**/   62,    86,   79,   51,    24,   36,     8,     1];
 
-
-var snakes_img_formation = [
-    // 0 - ROTATION
-    [2.2,   0.15],
-    // 1 - TRANSLATION
-    [
-     [1,    1],
-     [0,    0]
-    ],
-    // 2 - X
-    [1,     0.5],
-    // 3 - Y
-    [5,     3.5],
-    // 4 - WIDTH
-    [2,     2.75],
-    // 5 - HEIGHT
-    [2,    2.75]
-];
-
-
 // initializing Canvas/Map Size
 with(cvs) {
     width =             board_width;
@@ -200,30 +208,17 @@ var resetter =()=> {
     map_render();
     dice_body.disabled = false;
 }
-
-var snake_1 = new Image(),
-    snake_2 = new Image(),
-    ladder  = new Image();
     
-    snake_1.src = "assets/images/snake1.png";
-    
-// SNAKE LOADER 
-var snake_img_render =()=> {
-    snake_1.onload=()=> {
-        for(let i = 0; i < 7; i++) {
-                 ctx.drawImage(
-                    snake_1, 
-                    board_width/2*(1/snakes_img_formation[2][i]),
-                    board_width/2*(1/snakes_img_formation[3][i]),
-                    board_width/snakes_img_formation[4][i], 
-                    board_width/snakes_img_formation[5][i]
-                );
-        }
-    }
+var image_SAL_render = new Image();
+image_SAL_render.onload= ()=> {
+    ctx.drawImage(
+        image_SAL_render,
+        0,
+        0,
+        board_width,
+        board_width);
 }
-
-snake_img_render();
-    
+image_SAL_render.src = "assets/images/full_map.png";
 
 // CODE: 0004
 // Map rendering...
@@ -256,50 +251,47 @@ var map_render =()=> {
         }
 
        
+        drawImage(
+            image_SAL_render,
+            0,
+            0,
+            board_width,
+            board_width);
         
+        // GUIDE FOR SNAKES AND LADDERS
+
         // snake length - in percentage 
         //  FORMULA : x * y / 100
-
-        for(i=0;i<snake_head[0].length;i++) {
-            beginPath();
-                lineWidth = 4;
-                strokeStyle = "cornflowerblue";
-                moveTo(
-                    board_width*(snake_head[0][i]/100), 
-                    board_width*(snake_head[1][i]/100)
-                    );
-                lineTo(
-                    board_width*(snake_tail[0][i]/100), 
-                    board_width*(snake_tail[1][i]/100)
-                    );
-                stroke();
-            closePath();
-        }
-        for(i=0;i<ladders_final[0].length;i++) {
-            beginPath();
-                lineWidth = 4;
-                strokeStyle = "#a2ab58";
-                moveTo(
-                    board_width*(ladders_initial[0][i]/100), 
-                    board_width*(ladders_initial[1][i]/100)
-                    );
-                lineTo(
-                    board_width*(ladders_final[0][i]/100), 
-                    board_width*(ladders_final[1][i]/100)
-                    );
-                stroke();
-            closePath();
-        }
-
-        for(let i = 0; i < 7; i++) {
-            ctx.drawImage(
-               snake_1, 
-               board_width/2*(1/snakes_img_formation[2][i]),
-               board_width/2*(1/snakes_img_formation[3][i]),
-               board_width/snakes_img_formation[4][i], 
-               board_width/snakes_img_formation[5][i]
-           );
-        }
+        // for(i=0;i<snake_head[0].length;i++) {
+        //     beginPath();
+        //         lineWidth = 4;
+        //         strokeStyle = "cornflowerblue";
+        //         moveTo(
+        //             board_width*(snake_head[0][i]/100), 
+        //             board_width*(snake_head[1][i]/100)
+        //             );
+        //         lineTo(
+        //             board_width*(snake_tail[0][i]/100), 
+        //             board_width*(snake_tail[1][i]/100)
+        //             );
+        //         stroke();
+        //     closePath();
+        // }
+        // for(i=0;i<ladders_final[0].length;i++) {
+        //     beginPath();
+        //         lineWidth = 4;
+        //         strokeStyle = "#a2ab58";
+        //         moveTo(
+        //             board_width*(ladders_initial[0][i]/100), 
+        //             board_width*(ladders_initial[1][i]/100)
+        //             );
+        //         lineTo(
+        //             board_width*(ladders_final[0][i]/100), 
+        //             board_width*(ladders_final[1][i]/100)
+        //             );
+        //         stroke();
+        //     closePath();
+        // }
     } 
 }
 map_render();

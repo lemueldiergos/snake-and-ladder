@@ -65,9 +65,7 @@
 }
 
 .starting-point {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -170,5 +168,29 @@
   width: 5vh;
   -webkit-filter: invert(100);
           filter: invert(100);
+}
+
+@media (min-width: 576px) {
+  #dice_ID {
+    margin: 10vh !important;
+  }
+}
+
+@media (min-width: 768px) {
+  #dice_ID {
+    margin: 20vh !important;
+  }
+}
+
+@media (min-width: 992px) {
+  #dice_ID {
+    margin: 30vh !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  #dice_ID {
+    margin: 30vh !important;
+  }
 }
 /*# sourceMappingURL=style.css.map */

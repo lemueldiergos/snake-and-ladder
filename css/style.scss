@@ -1,5 +1,55 @@
 ::-webkit-scrollbar {width: 0px;}
 
+@keyframes snake_movement {
+    from {
+        transform: scaleX(-1);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.snakes_motion {
+    opacity: 100%;
+    overflow: hidden;
+    .snakes_move {
+        width: 5vh;
+    }
+    img:nth-child(1) {
+        position: absolute;
+        top: 10%;
+        right: 10%;
+        transform: rotate(-90deg);
+    }
+    img:nth-child(2) {
+        position: absolute;
+        top: 30%;
+        right: 80%;
+        transform: rotate(-90deg);
+    }
+    img:nth-child(3) {
+        position: absolute;
+        top: 0%;
+        right: 60%;
+        transform: rotate(-90deg);
+    }
+    img:nth-child(4) {
+        position: absolute;
+        top: 30%;
+        right:25%;
+        transform: rotate(-90deg);
+    }
+    img:nth-child(5) {
+        position: absolute;
+        transform: rotate(-90deg);
+        top: 60%;
+        right:25%;
+    }
+}
+
+
+
+
 @font-face {
     font-family: catcafe;
     src: url("../assets/CatCafe.ttf");
@@ -51,8 +101,8 @@
 
 
 .starting-point {
-    //display: flex;
-    display: none;
+    display: flex;
+    // display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -64,6 +114,14 @@
     background-color: black;
     opacity: 100%;
     transition: opacity 0.2s linear;
+    .layer-1 {
+        position: absolute;
+        z-index: 100;
+        h2 {
+            letter-spacing: 3vh;
+        }
+    }
+    
     button {
         justify-self: center;
         background-color: cornflowerblue;
@@ -76,27 +134,12 @@
         height: 7.5vh;
     }
 
-    button:focus {
-       position: fixed;
-       z-index: 100;
-       background-color: rgb(255, 0, 43);
-       width: 100%;
-       height: 100%;
-       font-size: 150%;
-       letter-spacing: 3px;
-       
-    }
-
-
     footer {
        position: absolute;
        padding: 7.5vh;
        bottom: 0;
+       letter-spacing: 3px;
        font-size: 100%;
-    }
-
-    h2 {
-        letter-spacing: 5px;
     }
 }
 
@@ -138,6 +181,7 @@
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
     #dice_ID {margin: 10vh !important;}
+    
 }
 
 // Medium devices (tablets, 768px and up)
@@ -148,6 +192,9 @@
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
     #dice_ID {margin: 30vh !important;}
+    .snakes_move {
+        width: 15vh;
+    }
 }
 
 // Extra large devices (large desktops, 1200px and up)

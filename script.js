@@ -51,6 +51,15 @@ var board_width =       window.innerWidth/2.5,
     board_height =      window.innerHeight/2.5,
     box_size =          board_width/10,
     box_margin =        box_size*0.05;
+    if(window.innerWidth <= 450) {
+        board_width =       window.innerWidth/1;
+        board_height =      window.innerHeight/1;
+        box_size =          board_width/10;
+        box_margin =        box_size*0.05;
+        with(dice_body.style) {
+            margin = "40vh !important";
+        }
+    }
 
     if(window.innerWidth >= 750) {
         board_width =       window.innerWidth/2.5;
@@ -61,13 +70,13 @@ var board_width =       window.innerWidth/2.5,
             margin = "40vh !important";
         }
     } 
-    else if(window.innerHeight >= 600) {
+    else if(window.innerHeight >= 600 && window.innerWidth >= 450) {
         board_width =       window.innerWidth/2;
         board_height =      window.innerHeight/2;
         box_size =          board_width/10;
         box_margin =        box_size*0.05;
         with(dice_body.style) {
-            margin = "30vh !important";
+            margin = "40vh !important";
         }
     }
     
@@ -91,6 +100,8 @@ var board_width =       window.innerWidth/2.5,
        // do nothing...
     }
 
+// In Game State 
+var ingame_status = false;
 // if player is moving
 var on_movement_state = false;
 var Animation_speed   = 400;    // ms
@@ -167,8 +178,25 @@ with(cvs) {
 }
 //  WINDOW CLIENT SIDES
 // CODE: 0003
+
 var play_on=()=> {
-    play_btn.innerHTML = "Loading...";
+    clearInterval(snake_animation_interval);
+    ingame_status = true;
+    with(play_btn) {
+        innerHTML = "Loading...";
+        with(style) {
+            position =          "fixed";
+            zIndex =            100;
+            top =               "-3.6%";
+            left =              0;
+            backgroundColor =   "crimson";//"rgb(255, 0, 43)";
+            width =             "100%";
+            height =            "100%";
+            fontSize =          "150%";
+            letterSpacing =     "3px";
+        }
+    }
+
     setTimeout(function() {
         with(win_1.style) {
             opacity = 0+"%";
@@ -182,6 +210,7 @@ var play_on=()=> {
 }
 // WINNING FUNCTION
 var youwin=()=> {
+    ingame_status = false;
     with(win_2.style) {
         marginTop = 0;
         backgroundColor = "rgba(0, 0, 0, 0.75)";
@@ -190,6 +219,7 @@ var youwin=()=> {
 }
 // RESET FUNCTION
 var resetter =()=> {
+    ingame_status = true;
     dice_body.style.opacity ="100%";
     with(win_2.style) {
         marginTop="-100vh";
@@ -208,7 +238,7 @@ var resetter =()=> {
     map_render();
     dice_body.disabled = false;
 }
-    
+// GRAPHICS FOR SNAKES AND LADDERS
 var image_SAL_render = new Image();
 image_SAL_render.onload= ()=> {
     ctx.drawImage(
@@ -218,7 +248,24 @@ image_SAL_render.onload= ()=> {
         board_width,
         board_width);
 }
-image_SAL_render.src = "assets/images/full_map.png";
+image_SAL_render.src = "assets/images/full_map2.png";
+
+var snakes_animation = document.getElementsByClassName("snakes_move");
+var snake_animation_inversion = false;
+var snake_scaleX = 1;
+var snakeMotion =()=> {
+    for(let i = 0 ; i < snakes_animation.length ; i++) {
+        snake_animation_inversion = (snake_animation_inversion == false)?true:false;
+        snake_scaleX =  (!snake_animation_inversion)?-1:1;
+        with(snakes_animation[i].style) {
+            transform = "rotate(-90deg) scaleX("+snake_scaleX+")";
+        }
+    }
+   
+}
+var snake_animation_interval = setInterval(snakeMotion, 500);
+
+
 
 // CODE: 0004
 // Map rendering...
@@ -258,8 +305,7 @@ var map_render =()=> {
             board_width,
             board_width);
         
-        // GUIDE FOR SNAKES AND LADDERS
-
+        // GUIDE FOR SNAKES AND LADDERS (CANVAS LINES)
         // snake length - in percentage 
         //  FORMULA : x * y / 100
         // for(i=0;i<snake_head[0].length;i++) {

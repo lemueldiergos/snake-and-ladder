@@ -31,12 +31,25 @@
 <body>
 <!-- STARTING POINT -->
 <div class="starting-point cointainer">
+<div class="text-center layer-1">
     <h2 class="display-3 py-4">Snakes & Ladders</h2>
     <button onclick="play_on()" id="play-btn" class="btn my-4 px-5 py-2 text-white">Play</button>
-        
-    <footer class="">
-        Creator: Lemuel E. Diergos
+    <!-- <button onclick="animation_stopper()" id="play-btn" class="btn my-4 px-5 py-2 text-white">test button</button> -->
+</div>  
+<div class="snakes_motion">
+    <img class="snakes_move" src="assets/images/snake_for_animation.png"/>
+    <img class="snakes_move" src="assets/images/snake_for_animation.png"/>
+    <img class="snakes_move" src="assets/images/snake_for_animation.png"/>
+    <img class="snakes_move" src="assets/images/snake_for_animation.png"/>
+    <img class="snakes_move" src="assets/images/snake_for_animation.png"/>
+</div> 
+    <div class="developer_contact">
+
+    </div>
+   <footer class="">
+        Created by: <a style="text-decoration: none;" target="_blank" href="https://www.facebook.com/lemuel.diergos.1">Lemuel E. Diergos</a>
     </footer>
+
 </div>
 
 <!-- WINNING POINT -->
@@ -53,16 +66,17 @@
 
 <div class="cointainer cvs-body d-flex flex-lg-row justify-content-center align-items-center">
     <canvas id="cvs"></canvas>
+    <!-- FOR DEBUGGING -->
     <!-- <p class="text-white mt-4">Rolling Dice Outcome: <span id="dice-result">0</span></p> -->
-    <button id="dice_ID" class="m-5" onclick="rolling()">
+    <button id="dice_ID" class="m-5 p-1 p-sm-1 p-md-2" onclick="rolling()">
+        <span class="dots m-1"></span>
+        <span class="dots m-1"></span>
         <span class="dots m-1"></span>
         <span class="dots m-1"></span>
         <span class="dots m-1"></span>
         <span class="dots m-1"></span>
     </button>
-    <!-- <button onclick="youwin()">
-        test button
-    </button> -->
+    <!-- <button onclick="youwin()">test button</button> -->
 </div>    
 
 

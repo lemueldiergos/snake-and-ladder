@@ -2,6 +2,77 @@
   width: 0px;
 }
 
+@-webkit-keyframes snake_movement {
+  from {
+    -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+  }
+  to {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+
+@keyframes snake_movement {
+  from {
+    -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+  }
+  to {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+
+.snakes_motion {
+  opacity: 100%;
+  overflow: hidden;
+}
+
+.snakes_motion .snakes_move {
+  width: 5vh;
+}
+
+.snakes_motion img:nth-child(1) {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+.snakes_motion img:nth-child(2) {
+  position: absolute;
+  top: 30%;
+  right: 80%;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+.snakes_motion img:nth-child(3) {
+  position: absolute;
+  top: 0%;
+  right: 60%;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+.snakes_motion img:nth-child(4) {
+  position: absolute;
+  top: 30%;
+  right: 25%;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+.snakes_motion img:nth-child(5) {
+  position: absolute;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  top: 60%;
+  right: 25%;
+}
+
 @font-face {
   font-family: catcafe;
   src: url("../assets/CatCafe.ttf");
@@ -65,7 +136,9 @@
 }
 
 .starting-point {
-  display: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -87,6 +160,15 @@
   transition: opacity 0.2s linear;
 }
 
+.starting-point .layer-1 {
+  position: absolute;
+  z-index: 100;
+}
+
+.starting-point .layer-1 h2 {
+  letter-spacing: 3vh;
+}
+
 .starting-point button {
   -ms-grid-column-align: center;
       justify-self: center;
@@ -97,25 +179,12 @@
   height: 7.5vh;
 }
 
-.starting-point button:focus {
-  position: fixed;
-  z-index: 100;
-  background-color: #ff002b;
-  width: 100%;
-  height: 100%;
-  font-size: 150%;
-  letter-spacing: 3px;
-}
-
 .starting-point footer {
   position: absolute;
   padding: 7.5vh;
   bottom: 0;
+  letter-spacing: 3px;
   font-size: 100%;
-}
-
-.starting-point h2 {
-  letter-spacing: 5px;
 }
 
 .winning-point {
@@ -185,6 +254,9 @@
 @media (min-width: 992px) {
   #dice_ID {
     margin: 30vh !important;
+  }
+  .snakes_move {
+    width: 15vh;
   }
 }
 

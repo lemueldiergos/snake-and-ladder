@@ -178,8 +178,14 @@ with(cvs) {
 }
 //  WINDOW CLIENT SIDES
 // CODE: 0003
+var play_on_audio =         new Audio("assets/sound/start.mp3"),
+    snake_eaten_audio =     new Audio("assets/sound/snake.mp3"),
+    stepping_audio =        new Audio("assets/sound/step.mp3"),
+    wins_audio =            new Audio("assets/sound/win.mp3");
 
-var play_on=()=> {
+
+    var play_on=()=> {
+    play_on_audio.play();
     clearInterval(snake_animation_interval);
     ingame_status = true;
     with(play_btn) {
@@ -210,6 +216,7 @@ var play_on=()=> {
 }
 // WINNING FUNCTION
 var youwin=()=> {
+    wins_audio.play();
     ingame_status = false;
     with(win_2.style) {
         marginTop = 0;
@@ -354,6 +361,7 @@ map_render();
 var snake_catcher=      (xs_in=0, ys_in=0, 
                         os_in=0, is_in=0, 
                         ii_in=0, fs_in=0)=> {
+    snake_eaten_audio.play();
     const snake_head_sample =  [32, 36, 48, 62, 88, 95, 97, 0,0,0,0,0,0,0,0];
     for(let i = 0; i < snake_head_sample.length ; i++) {
       if(
@@ -481,6 +489,7 @@ var Roll =()=> {
     //    );
        }
     map_render();
+    stepping_audio.play();
 }
 
 var previous_span_count = 0;

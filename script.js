@@ -247,7 +247,11 @@ var resetter =()=> {
 }
 // GRAPHICS FOR SNAKES AND LADDERS
 var image_SAL_render = new Image();
+var image_loader = false;
+console.log(image_loader);
 image_SAL_render.onload= ()=> {
+    image_loader = true;
+    console.log(image_loader);
     ctx.drawImage(
         image_SAL_render,
         0,
@@ -286,7 +290,7 @@ var map_render =()=> {
                         fillStyle = "#139487";
                     break;
                     case 1: // player
-                        fillStyle = "magenta";
+                        fillStyle = "#072227";
                     break;
                     case 2: // snake
                         fillStyle = "#dd1818";

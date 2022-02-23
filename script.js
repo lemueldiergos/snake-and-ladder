@@ -23,6 +23,7 @@ SOFTWARE.
 
 
 
+
     --DETAILS
     PROGRAMMED BY:      LEMUEL E. DIERGOS
     GITHUB:             https://github.com/lemueldiergos
@@ -63,7 +64,8 @@ SOFTWARE.
 // HTML ELEMENTS
 var play_btn =          document.getElementById("play-btn"),
     win_1 =             document.getElementsByClassName("starting-point")[0],
-    win_2 =             document.getElementsByClassName("winning-point")[0];
+    win_2 =             document.getElementsByClassName("winning-point")[0],
+    waiting =           document.getElementsByClassName("loading-screen")[0];
 // Canvas Elements/Context
 var cvs =               document.getElementById("cvs"),
     ctx =               cvs.getContext("2d"),
@@ -228,7 +230,6 @@ var play_on_audio =         new Audio("assets/sound/start.mp3"),
         }
     }
     console.log(image_loader);
-    if(image_loader) {
         setTimeout(function() {
             with(win_1.style) {
                 opacity = 0+"%";
@@ -240,7 +241,6 @@ var play_on_audio =         new Audio("assets/sound/start.mp3"),
             
             }
         }, 1500);
-    }
 }
 
 // WINNING FUNCTION
@@ -277,10 +277,9 @@ var resetter =()=> {
 // GRAPHICS FOR SNAKES AND LADDERS
 var image_SAL_render = new Image();
 var image_loader = false;
-console.log(image_loader);
 image_SAL_render.onload= ()=> {
     image_loader = true;
-    console.log(image_loader);
+    waiting.style.display = "none";
     ctx.drawImage(
         image_SAL_render,
         0,

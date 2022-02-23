@@ -239,6 +239,60 @@
           filter: invert(100);
 }
 
+.loading-screen {
+  position: fixed;
+  z-index: 10000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: aquamarine;
+  width: 100%;
+  height: 100vh;
+}
+
+.loading-screen h2 {
+  -webkit-animation-name: loading_dots;
+          animation-name: loading_dots;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes loading_dots {
+  0% {
+    font-size: 200%;
+  }
+  50% {
+    font-size: 300%;
+  }
+  100% {
+    font-size: 200%;
+  }
+}
+
+@keyframes loading_dots {
+  0% {
+    font-size: 200%;
+  }
+  50% {
+    font-size: 300%;
+  }
+  100% {
+    font-size: 200%;
+  }
+}
+
 @media (min-width: 576px) {
   #dice_ID {
     margin: 10vh !important;

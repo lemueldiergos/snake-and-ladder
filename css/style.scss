@@ -200,6 +200,40 @@
 }
 
 
+
+
+.loading-screen {
+    position: fixed;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+    width: 100%;
+    height: 100vh;
+    h2 {
+        animation-name: loading_dots;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    }
+}
+
+@keyframes loading_dots {
+    0% {
+        font-size: 200%;
+    }
+    50% {
+        font-size: 300%;    
+    }
+    100% {
+        font-size: 200%;    
+    }
+    
+}
+
+
+
 //BOOTSTRAP MEDIA
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {

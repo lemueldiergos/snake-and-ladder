@@ -18,4 +18,5 @@
  
  <br><br>
  <h4>Preview</h4>
+ <img width="500" src="assets/sampleIMG2.JPG"/>
  <img width="500" src="assets/sampleIMG.JPG"/>

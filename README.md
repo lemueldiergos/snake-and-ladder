@@ -11,7 +11,7 @@
  <br><br>
 <p>
     I simply used HTML5 canvas for making this simple game, without using any <br>
-    game engines and it is purely writtenin Javascript. I also used bootstrap <br>
+    game engines and it is purely written in Javascript. I also used bootstrap <br>
     to make this game much more responsive in other devices and way more faster <br>
     to code. 
 </p>

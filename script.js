@@ -185,6 +185,7 @@ var play_on_audio =         new Audio("assets/sound/start.mp3"),
 
 
     var play_on=()=> {
+    play_on_audio.volume = 0.15;
     play_on_audio.play();
     clearInterval(snake_animation_interval);
     ingame_status = true;
@@ -202,18 +203,22 @@ var play_on_audio =         new Audio("assets/sound/start.mp3"),
             letterSpacing =     "3px";
         }
     }
-
-    setTimeout(function() {
-        with(win_1.style) {
-            opacity = 0+"%";
-            dice_body.disabled = true;
-            setTimeout(function() {
-                display = "none";
-                dice_body.disabled = false;
-            }, 500);
-        }
-    }, 1500);
+    console.log(image_loader);
+    if(image_loader) {
+        setTimeout(function() {
+            with(win_1.style) {
+                opacity = 0+"%";
+                dice_body.disabled = true;
+                setTimeout(function() {
+                    display = "none";
+                    dice_body.disabled = false;
+                }, 500);
+            
+            }
+        }, 1500);
+    }
 }
+
 // WINNING FUNCTION
 var youwin=()=> {
     wins_audio.play();

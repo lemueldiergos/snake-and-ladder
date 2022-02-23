@@ -1,13 +1,21 @@
-<h2>DETAILS</h2>
+<h1>Snakes and Ladders</h1>
+<h4>DETAILS</h4>
 <br>
-    <b>PROGRAMMED BY: &emsp;&emsp;&emsp;</b>Lemuel E. Diergos<br>
-    <b>GITHUB: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>https://github.com/lemueldiergos<br>
-    <b>FACEBOOK:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>https://www.facebook.com/lemuel.diergos.1<br>
-    <b>PERSONAL SITE:&emsp;&emsp;&emsp;&emsp;&emsp;</b>https://lemueldiergos.github.io<br>
-    <b>LANGUAGE USED:&emsp;&emsp;&emsp;&emsp;</b>HTML, CSS, Javascript<br>
-    <b>IDE USED:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b>VSCode<br>
-    <b>DATE CREATED:&emsp;&emsp;&emsp;&emsp;&emsp;</b>FEB. 11, 2022<br>
+    <b>PROGRAMMED BY: &emsp;&emsp;&emsp;</b><i>Lemuel E. Diergos</i><br>
+    <b>GITHUB: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>https://github.com/lemueldiergos</i><br>
+    <b>FACEBOOK:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>https://www.facebook.com/lemuel.diergos.1</i><br>
+    <b>PERSONAL SITE:&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>https://lemueldiergos.github.io</i><br>
+    <b>LANGUAGE USED:&emsp;&emsp;&emsp;&emsp;</b><i>HTML, CSS, Javascript</i><br>
+    <b>IDE USED:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>VSCode</i><br>
+    <b>DATE CREATED:&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>FEB. 11, 2022</i><br>
+ <br><br>
+<p>
+    I simply used HTML5 canvas for making this simple game, without using any <br>
+    game engines and it is purely writtenin Javascript. I also used bootstrap <br>
+    to make this game much more responsive in other devices and way more faster <br>
+    to code. 
+</p>
  
  <br><br>
- <h2>Preview</h2>
- <img src="assets/sampleIMG.JPG"/>
+ <h4>Preview</h4>
+ <img width="500" src="assets/sampleIMG.JPG"/>

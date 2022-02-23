@@ -2,8 +2,8 @@
 <h4>DETAILS</h4>
 <br>
     <b>PROGRAMMED BY: &emsp;&emsp;&emsp;</b><i>Lemuel E. Diergos</i><br>
-    <b>GITHUB: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>https://github.com/lemueldiergos</i><br>
     <b>FACEBOOK:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>https://www.facebook.com/lemuel.diergos.1</i><br>
+    <b>TWITTER:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>@lemuel_diergos</i><br>
     <b>PERSONAL SITE:&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>https://lemueldiergos.github.io</i><br>
     <b>LANGUAGE USED:&emsp;&emsp;&emsp;&emsp;</b><i>HTML, CSS, Javascript</i><br>
     <b>IDE USED:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</b><i>VSCode</i><br>
